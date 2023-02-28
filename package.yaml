@@ -55,9 +55,8 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-    - bytestring
-    - containers
-    - text
+    - template-haskell
+    - vector
 
 executables:
   demo:
