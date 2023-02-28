@@ -1,6 +1,12 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module Data.SortingNetwork.TH where
+module Data.SortingNetwork.TH (
+  gMkSortBy,
+  mkSortListBy,
+  mkSortTupBy,
+  mkSortListByFns,
+  mkSortTupByFns,
+) where
 
 import Control.Monad
 import Control.Monad.IO.Class
@@ -8,10 +14,11 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Mutable as VM
 import Language.Haskell.TH
 
+type MkPairs = Int -> [(Int, Int)]
 type PartQ = Exp -> Q Exp
 
-gMkSortByFn :: (Int -> [(Int, Int)]) -> Int -> ([Pat] -> Pat) -> ([Exp] -> Exp) -> Q Exp
-gMkSortByFn mkPairs n mkP mkE = do
+gMkSortBy :: MkPairs -> Int -> ([Pat] -> Pat) -> ([Exp] -> Exp) -> Q Exp
+gMkSortBy mkPairs n mkP mkE = do
   -- cmp :: a -> a -> Ordering
   cmp <- newName "cmp"
 
@@ -54,6 +61,19 @@ gMkSortByFn mkPairs n mkP mkE = do
         $(mkBody $ mkE $ VarE <$> ns)
     |]
 
-mkSortByFnList, mkSortByFnTup :: (Int -> [(Int, Int)]) -> Int -> ExpQ
-mkSortByFnList mkPairs n = gMkSortByFn mkPairs n ListP ListE
-mkSortByFnTup mkPairs n = gMkSortByFn mkPairs n TupP (TupE . fmap Just)
+mkSortListBy, mkSortTupBy :: MkPairs -> Int -> ExpQ
+mkSortListBy mkPairs n = gMkSortBy mkPairs n ListP ListE
+mkSortTupBy mkPairs n = gMkSortBy mkPairs n TupP (TupE . fmap Just)
+
+mkSortListByFns, mkSortTupByFns :: MkPairs -> [Int] -> Q [Dec]
+mkSortListByFns mkPairs ns =
+  concat <$> forM ns \n -> do
+    let defN :: Name
+        defN = mkName $ "sortList" <> show n <> "By"
+    bd <- mkSortListBy mkPairs n
+    [d|$(varP defN) = $(pure bd)|]
+mkSortTupByFns mkPairs ns =
+  concat <$> forM ns \n -> do
+    let defN = mkName $ "sortTup" <> show n <> "By"
+    bd <- mkSortTupBy mkPairs n
+    [d|$(varP defN) = $(pure bd)|]
