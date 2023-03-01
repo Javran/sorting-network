@@ -4,7 +4,9 @@ github: Javran/sorting-network
 license: Apache-2.0
 author: Javran Cheng
 maintainer: javran.c@gmail.com
-description: Sort small lists with sorting network.
+category: Sorting
+synopsis: Sort small lists with sorting network.
+description: Functions that sort small (2~16 elements) lists or homogenous tuples.
 
 ghc-options:
   - -Wall
@@ -50,7 +52,7 @@ default-extensions:
   - TypeSynonymInstances
 
 dependencies:
-  - base
+  - base >= 4.15 && <= 1000
 
 library:
   source-dirs: src
@@ -73,3 +75,19 @@ tests:
       - -rtsopts
       - -with-rtsopts=-N
       - -main-is Spec
+
+benchmarks:
+  bench:
+    main: Bench.hs
+    source-dirs:
+      - bench
+    dependencies:
+      - criterion
+      - mwc-random
+      - sorting-network
+    ghc-options:
+      - -O2
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      - -main-is Bench

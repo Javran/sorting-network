@@ -4,3 +4,5 @@ cradle:
       component: "sorting-network:lib"
     - path: "./test"
       component: "sorting-network:test:hspec"
+    - path: "./bench"
+      component: "sorting-network:bench:bench"
