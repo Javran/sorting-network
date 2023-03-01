@@ -7,9 +7,6 @@ import Data.Bits
 
 {-
   Ref: https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort
-
-  Note: goes out of bound when n is not a power of 2.
-  unclear if we can simply just ignore those values?
  -}
 batcher :: Int -> [] (Int, Int)
 batcher n = do
@@ -21,8 +18,11 @@ batcher n = do
   guard $ shiftR (i + j) pw == shiftR (i + j + k) pw
   {-
     Index could get out of bound without this check
-    when n is not a power of 2 - not sure about
-    its correctness but QuickCheck is yet to find an counterexample.
+    when n is not a power of 2.
+
+    I'm not sure about then correctness when n > 16,
+    but our tests can verify its correctness for n = [2.. 16]
+    based on 0-1 principle.
    -}
   guard $ i + j + k < n
   pure (i + j, i + j + k)
