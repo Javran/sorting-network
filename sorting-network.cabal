@@ -130,6 +130,7 @@ test-suite hspec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Data.SortingNetworkSpec
       DemoSpec
       Paths_sorting_network
   hs-source-dirs:
