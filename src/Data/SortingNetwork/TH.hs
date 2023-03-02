@@ -10,6 +10,7 @@ module Data.SortingNetwork.TH (
 
 import Control.Monad
 import Control.Monad.IO.Class
+import Data.Semigroup
 import Data.SortingNetwork.Types
 import qualified Data.Vector as V
 import qualified Data.Vector.Mutable as VM
@@ -65,6 +66,13 @@ mkSortListBy, mkSortTupBy :: MkPairs -> Int -> ExpQ
 mkSortListBy mkPairs n = gMkSortBy mkPairs n ListP ListE
 mkSortTupBy mkPairs n = gMkSortBy mkPairs n TupP (TupE . fmap Just)
 
+{-
+  Note: I'm not sure if there are more convenient ways to have type signatures with qq,
+  so current approach is just to build it from plain constructors.
+
+  Might be related: https://stackoverflow.com/q/37478037/315302
+ -}
+
 mkSortListByFns, mkSortTupByFns :: MkPairs -> [Int] -> Q [Dec]
 mkSortListByFns mkPairs ns =
   concat <$> forM ns \n -> do
@@ -79,4 +87,11 @@ mkSortTupByFns mkPairs ns =
   concat <$> forM ns \n -> do
     let defN = mkName $ "sortTup" <> show n <> "By"
     bd <- mkSortTupBy mkPairs n
-    [d|$(varP defN) = $(pure bd)|]
+    a <- newName "a"
+    tupTy <- do
+      constr <- tupleT n
+      pure $ appEndo (stimes n (Endo (\t -> AppT t (VarT a)))) constr
+    sequence
+      [ sigD defN [t|($(varT a) -> $(varT a) -> Ordering) -> $(pure tupTy) -> $(pure tupTy)|]
+      , funD defN [clause [] (normalB $ pure bd) []]
+      ]
