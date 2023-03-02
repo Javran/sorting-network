@@ -26,6 +26,7 @@ library
       Data.SortingNetwork
       Data.SortingNetwork.Compares
       Data.SortingNetwork.TH
+      Data.SortingNetwork.Types
   other-modules:
       Paths_sorting_network
   hs-source-dirs:

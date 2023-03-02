@@ -10,11 +10,11 @@ module Data.SortingNetwork.TH (
 
 import Control.Monad
 import Control.Monad.IO.Class
+import Data.SortingNetwork.Types
 import qualified Data.Vector as V
 import qualified Data.Vector.Mutable as VM
 import Language.Haskell.TH
 
-type MkPairs = Int -> [(Int, Int)]
 type PartQ = Exp -> Q Exp
 
 gMkSortBy :: MkPairs -> Int -> ([Pat] -> Pat) -> ([Exp] -> Exp) -> Q Exp
