@@ -71,7 +71,10 @@ mkSortListByFns mkPairs ns =
     let defN :: Name
         defN = mkName $ "sortList" <> show n <> "By"
     bd <- mkSortListBy mkPairs n
-    [d|$(varP defN) = $(pure bd)|]
+    sequence
+      [ sigD defN [t|forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a]|]
+      , funD defN [clause [] (normalB $ pure bd) []]
+      ]
 mkSortTupByFns mkPairs ns =
   concat <$> forM ns \n -> do
     let defN = mkName $ "sortTup" <> show n <> "By"
