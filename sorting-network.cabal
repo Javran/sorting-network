@@ -25,6 +25,7 @@ library
   exposed-modules:
       Data.SortingNetwork
       Data.SortingNetwork.Compares
+      Data.SortingNetwork.MutableVector
       Data.SortingNetwork.TH
       Data.SortingNetwork.Types
   other-modules:
@@ -73,6 +74,7 @@ library
   ghc-options: -Wall
   build-depends:
       base >=4.15 && <=1000
+    , primitive
     , template-haskell
     , vector
   default-language: Haskell2010
@@ -81,6 +83,7 @@ test-suite hspec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Data.SortingNetwork.ComparesSpec
       Data.SortingNetworkSpec
       Paths_sorting_network
   hs-source-dirs:
@@ -130,6 +133,7 @@ test-suite hspec
     , base >=4.15 && <=1000
     , hspec
     , sorting-network
+    , vector
   default-language: Haskell2010
 
 benchmark bench

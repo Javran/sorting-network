@@ -57,6 +57,7 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
+    - primitive
     - template-haskell
     - vector
 
@@ -66,9 +67,10 @@ tests:
     source-dirs:
       - test
     dependencies:
-      - sorting-network
       - QuickCheck
       - hspec
+      - sorting-network
+      - vector
     ghc-options:
       - -O2
       - -threaded
