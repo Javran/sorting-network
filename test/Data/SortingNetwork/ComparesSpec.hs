@@ -21,19 +21,21 @@ isSorted :: Ord a => [a] -> Bool
 isSorted xs = and (zipWith (<=) xs (tail xs))
 
 {-
-  TODO: this is a bit too slow to my liking - maybe we should prefer end-to-end testing
-  as there are way less vector allocation involved.
+  TODO: test is now disabled - end-to-end testing with TH is faster as there are no vector overhead.
+  plus we are getting almost the same coverage - we just need to verify that the sequence of compare-and-swap
+  operation does sort.
  -}
 spec :: Spec
-spec = forM_
-  [ ("optimal", optimal)
-  , ("batcher", batcher)
-  ]
-  \(tag, mkPairs) ->
-    describe tag do
-      describe "0-1 principle" do
-        forM_ [2 .. 16] \n -> specify ("n = " <> show n) do
-          let inputs :: [] [Bool]
-              inputs = replicateM n [False, True]
-          forM_ inputs \inp ->
-            sortViaVector mkPairs inp `shouldSatisfy` isSorted
+spec = when False do
+  forM_
+    [ ("optimal", optimal)
+    , ("batcher", batcher)
+    ]
+    \(tag, mkPairs) ->
+      describe tag do
+        describe "0-1 principle" do
+          forM_ [2 .. 16] \n -> specify ("n = " <> show n) do
+            let inputs :: [] [Bool]
+                inputs = replicateM n [False, True]
+            forM_ inputs \inp ->
+              sortViaVector mkPairs inp `shouldSatisfy` isSorted

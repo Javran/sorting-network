@@ -86,7 +86,8 @@ test-suite hspec
   main-is: Spec.hs
   other-modules:
       Data.SortingNetwork.ComparesSpec
-      Data.SortingNetworkSpec
+      Data.SortingNetwork.OddEvenMergeSpec
+      Data.SortingNetwork.OptimalSizeSpec
       Paths_sorting_network
   hs-source-dirs:
       test

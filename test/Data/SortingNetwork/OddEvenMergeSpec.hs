@@ -1,10 +1,14 @@
-module Data.SortingNetworkSpec (
+module Data.SortingNetwork.OddEvenMergeSpec (
   spec,
 ) where
 
 import Control.Monad
-import Data.SortingNetwork
+import Data.SortingNetwork.OddEvenMerge
 import Test.Hspec
+
+{-
+  TODO: share code between this and OptimalSize.
+ -}
 
 {-
 
