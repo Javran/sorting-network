@@ -26,6 +26,8 @@ library
       Data.SortingNetwork
       Data.SortingNetwork.Compares
       Data.SortingNetwork.MutableVector
+      Data.SortingNetwork.OddEvenMerge
+      Data.SortingNetwork.OptimalSize
       Data.SortingNetwork.TH
       Data.SortingNetwork.Types
   other-modules:
