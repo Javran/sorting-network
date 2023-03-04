@@ -2,7 +2,7 @@ module Data.SortingNetwork.OddEvenMergeSpec (
   spec,
 ) where
 
-import Control.Monad
+import Data.SortingNetwork.Common (mkEndToEndSpec)
 import Data.SortingNetwork.OddEvenMerge
 import Test.Hspec
 
@@ -11,22 +11,9 @@ import Test.Hspec
  -}
 
 {-
-
--- easiest to just generate those:
-
-import Text.Printf
-let f i = printf "  %d -> sortList%dBy\n" i i
-mapM_ f [2..16]
-
- -}
-
-{-
   Routes to a specific partial function given length.
-
-  TODO: Note that since we don't generate type signatures in TH for now,
-  this is also to make sure that we have inferenced types that are general enough.
  -}
-sortFnRouter :: Int -> Ord a => (a -> a -> Ordering) -> [a] -> [a]
+sortFnRouter :: Int -> forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a]
 sortFnRouter = \case
   2 -> sortList2By
   3 -> sortList3By
@@ -45,15 +32,5 @@ sortFnRouter = \case
   16 -> sortList16By
   v -> error $ "Missing function for length " <> show v
 
-isSorted :: Ord a => [a] -> Bool
-isSorted xs = and (zipWith (<=) xs (tail xs))
-
 spec :: Spec
-spec = forM_ [2 .. 16] \n ->
-  describe ("sortList" <> show n <> "By") do
-    specify "0-1 principle" do
-      let inputs :: [] [Bool]
-          inputs = replicateM n [False, True]
-          sortFn = sortFnRouter n (compare @Bool)
-      forM_ inputs \inp ->
-        sortFn inp `shouldSatisfy` isSorted
+spec = mkEndToEndSpec sortFnRouter [2 .. 16]

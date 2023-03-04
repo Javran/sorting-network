@@ -85,6 +85,7 @@ test-suite hspec
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Data.SortingNetwork.Common
       Data.SortingNetwork.ComparesSpec
       Data.SortingNetwork.OddEvenMergeSpec
       Data.SortingNetwork.OptimalSizeSpec
