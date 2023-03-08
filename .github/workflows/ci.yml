@@ -52,7 +52,7 @@ jobs:
           stack --install-ghc --no-interleaved-output --no-terminal test bench --only-snapshot
 
       - name: Build all targets
-        run: stack --no-interleaved-output --no-terminal --test --no-run-tests --bench --no-run-benchmarks
+        run: stack --no-interleaved-output --no-terminal build --test --no-run-tests --bench --no-run-benchmarks
 
       - name: Run tests
         run: stack --no-interleaved-output --no-terminal test
