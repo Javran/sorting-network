@@ -8,6 +8,10 @@ import Data.Bits
 import Data.SortingNetwork.Types
 
 {-
+  TODO: might be useful: https://metacpan.org/dist/Algorithm-Networksort/source/lib/Algorithm/Networksort.pm
+ -}
+
+{-
   Ref: https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort
  -}
 batcher :: MkPairs

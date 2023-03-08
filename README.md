@@ -56,4 +56,6 @@ This library builds those functions for you, utilizing template haskell.
 
 This library takes inspiration from @oisdk's post [Sorting Small Things in Haskell](https://doisinkidney.com/posts/2018-05-06-sorting-small.html).
 
+Optimal networks (by size) are taken from https://bertdobbelaere.github.io/sorting_networks.html.
+
 Also thanks for all the suggestion, support, and criticism from [the initial release thread on Reddit](https://www.reddit.com/r/haskell/comments/11eyopo/ann_sortingnetwork_initial_release/).
