@@ -13,6 +13,7 @@ ghc-options:
 
 extra-source-files:
   - README.md
+  - CHANGELOG.md
 
 default-extensions:
   - BangPatterns
