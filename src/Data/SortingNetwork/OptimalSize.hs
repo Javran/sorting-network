@@ -10,6 +10,6 @@ import Data.SortingNetwork.TH
   (minimum number of compares)
  -}
 
-mkSortListByFns optimal [2 .. 16]
+mkUnsafeSortListByFns optimal [2 .. 16]
 
 mkSortTupByFns optimal [2 .. 16]

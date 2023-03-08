@@ -16,6 +16,8 @@ maintainer:     javran.c@gmail.com
 license:        Apache-2.0
 license-file:   LICENSE
 build-type:     Simple
+extra-source-files:
+    README.md
 
 source-repository head
   type: git

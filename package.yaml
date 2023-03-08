@@ -11,6 +11,9 @@ description: Functions that sort small (2~16 elements) lists or homogenous tuple
 ghc-options:
   - -Wall
 
+extra-source-files:
+  - README.md
+
 default-extensions:
   - BangPatterns
   - BinaryLiterals

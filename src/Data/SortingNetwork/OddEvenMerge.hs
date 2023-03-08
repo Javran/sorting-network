@@ -9,7 +9,7 @@ import Data.SortingNetwork.TH
   Batcher's odd–even mergesort
  -}
 
-mkSortListByFns batcher [2 .. 16]
+mkUnsafeSortListByFns batcher [2 .. 16]
 
 mkSortTupByFns batcher [2 .. 16]
 

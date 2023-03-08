@@ -26,14 +26,14 @@ main = do
   g <- createSystemRandom
   defaultMain do
     (n, sortByFn) <-
-      [ (4, sortList4By)
-        , (7, sortList7By)
-        , (8, sortList8By)
-        , (16, sortList16By)
+      [ (4, unsafeSortList4By)
+        , (7, unsafeSortList7By)
+        , (8, unsafeSortList8By)
+        , (16, unsafeSortList16By)
         ]
     let mkBench inps =
             [ bench "Data.List.sort" $ nf (fmap sort) inps
-            , bench ("sortList" <> show n <> "By") $ nf (fmap (sortByFn compare)) inps
+            , bench ("unsafeSortList" <> show n <> "By") $ nf (fmap (sortByFn compare)) inps
             ]
 
     pure $

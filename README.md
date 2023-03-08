@@ -11,7 +11,7 @@ To use this library, `import Data.SortingNetwork` and you will bring two sets of
 
 ```haskell
 -- where X is a number from 2-16
-sortListXBy :: Ord a => (a -> a -> Ordering) -> [a] -> [a]
+unsafeSortListXBy :: Ord a => (a -> a -> Ordering) -> [a] -> [a]
 
 -- where X is a number from 2-16
 sortTup2By :: Ord a => (a -> a -> Ordering) -> (a, a) -> (a, a)
@@ -21,7 +21,7 @@ sortTup4By :: Ord a => (a -> a -> Ordering) -> (a, a, a, a) -> (a, a, a, a)
 sortTup16By :: Ord a => (a -> a -> Ordering) -> (a, a, ..., a) -> (a, a, ..., a)
 ```
 
-in which `sortListXBy` are partial functions that only accept list of corresponding length
+in which `unsafeSortListXBy` are partial functions that only accept list of corresponding length
 (you will get pattern matching failures if that is not the case).
 
 ## How it works

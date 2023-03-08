@@ -2,9 +2,9 @@
 
 module Data.SortingNetwork.TH (
   gMkSortBy,
-  mkSortListBy,
+  mkUnsafeSortListBy,
   mkSortTupBy,
-  mkSortListByFns,
+  mkUnsafeSortListByFns,
   mkSortTupByFns,
 ) where
 
@@ -62,8 +62,8 @@ gMkSortBy mkPairs n mkP mkE = do
         $(mkBody $ mkE $ VarE <$> ns)
     |]
 
-mkSortListBy, mkSortTupBy :: MkPairs -> Int -> ExpQ
-mkSortListBy mkPairs n = gMkSortBy mkPairs n ListP ListE
+mkUnsafeSortListBy, mkSortTupBy :: MkPairs -> Int -> ExpQ
+mkUnsafeSortListBy mkPairs n = gMkSortBy mkPairs n ListP ListE
 mkSortTupBy mkPairs n = gMkSortBy mkPairs n TupP (TupE . fmap Just)
 
 {-
@@ -73,12 +73,12 @@ mkSortTupBy mkPairs n = gMkSortBy mkPairs n TupP (TupE . fmap Just)
   Might be related: https://stackoverflow.com/q/37478037/315302
  -}
 
-mkSortListByFns, mkSortTupByFns :: MkPairs -> [Int] -> Q [Dec]
-mkSortListByFns mkPairs ns =
+mkUnsafeSortListByFns, mkSortTupByFns :: MkPairs -> [Int] -> Q [Dec]
+mkUnsafeSortListByFns mkPairs ns =
   concat <$> forM ns \n -> do
     let defN :: Name
-        defN = mkName $ "sortList" <> show n <> "By"
-    bd <- mkSortListBy mkPairs n
+        defN = mkName $ "unsafeSortList" <> show n <> "By"
+    bd <- mkUnsafeSortListBy mkPairs n
     sequence
       [ sigD defN [t|forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a]|]
       , funD defN [clause [] (normalB $ pure bd) []]
