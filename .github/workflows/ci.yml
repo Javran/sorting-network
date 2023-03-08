@@ -49,6 +49,10 @@ jobs:
       - name: Build Snapshot
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          stack --install-ghc --no-interleaved-output --no-terminal test --only-snapshot
+          stack --install-ghc --no-interleaved-output --no-terminal test bench --only-snapshot
 
-      - run: stack --no-interleaved-output --no-terminal test
+      - name: Build all targets
+        run: stack --no-interleaved-output --no-terminal --test --no-run-tests --bench --no-run-benchmarks
+
+      - name: Run tests
+        run: stack --no-interleaved-output --no-terminal test
