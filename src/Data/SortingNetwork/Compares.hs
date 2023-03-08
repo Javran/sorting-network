@@ -1,5 +1,5 @@
 module Data.SortingNetwork.Compares (
-  batcher,
+  oddEvenMerge,
   optimal,
 ) where
 
@@ -14,8 +14,8 @@ import Data.SortingNetwork.Types
 {-
   Ref: https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort
  -}
-batcher :: MkPairs
-batcher n =
+oddEvenMerge :: MkPairs
+oddEvenMerge n =
   guard (n >= 0) >> pure do
     -- INVARIANT: p == shiftL 1 (pw - 1)
     (p, pw) <- zip (takeWhile (< n) $ iterate (* 2) 1) [1 ..]

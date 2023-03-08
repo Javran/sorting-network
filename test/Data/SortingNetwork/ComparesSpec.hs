@@ -4,9 +4,10 @@ module Data.SortingNetwork.ComparesSpec (
 
 import Control.Monad
 import Control.Monad.ST
-import Data.SortingNetwork.Compares
+import Data.SortingNetwork.Compares (oddEvenMerge, optimal)
 import Data.SortingNetwork.MutableVector (unsafeSortBy)
-import Data.SortingNetwork.Types
+import Data.SortingNetwork.Types (MkPairs)
+import Data.SortingNetwork.Common (isSorted)
 import qualified Data.Vector as V
 import Test.Hspec
 
@@ -17,9 +18,6 @@ sortViaVector mkPairs xs = runST do
   vFin <- V.unsafeFreeze v
   pure $ V.toList vFin
 
-isSorted :: Ord a => [a] -> Bool
-isSorted xs = and (zipWith (<=) xs (tail xs))
-
 {-
   TODO: test is now disabled - end-to-end testing with TH is faster as there are no vector overhead.
   plus we are getting almost the same coverage - we just need to verify that the sequence of compare-and-swap
@@ -29,7 +27,7 @@ spec :: Spec
 spec = when False do
   forM_
     [ ("optimal", optimal)
-    , ("batcher", batcher)
+    , ("oddEvenMerge", oddEvenMerge)
     ]
     \(tag, mkPairs) ->
       describe tag do

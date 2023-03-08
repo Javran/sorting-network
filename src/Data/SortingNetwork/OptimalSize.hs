@@ -2,8 +2,11 @@
 
 module Data.SortingNetwork.OptimalSize where
 
-import Data.SortingNetwork.Compares
-import Data.SortingNetwork.TH
+import Data.SortingNetwork.Compares (optimal)
+import Data.SortingNetwork.TH (
+  mkSortTupByFns,
+  mkUnsafeSortListByFns,
+ )
 
 {-
   Sorting network optimal in terms of size
