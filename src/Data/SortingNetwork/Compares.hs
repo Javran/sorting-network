@@ -1,3 +1,7 @@
+{-|
+  Functions that generate sorting networks given a input size.
+ -}
+
 module Data.SortingNetwork.Compares (
   oddEvenMerge,
   optimal,
@@ -11,8 +15,10 @@ import Data.SortingNetwork.Types
   TODO: might be useful: https://metacpan.org/dist/Algorithm-Networksort/source/lib/Algorithm/Networksort.pm
  -}
 
-{-
-  Ref: https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort
+{-|
+  Batcher's odd-even mergesort
+
+  Adopted from Pseudocode section of <https://en.wikipedia.org/wiki/Batcher_odd%E2%80%93even_mergesort>.
  -}
 oddEvenMerge :: MkPairs
 oddEvenMerge n =
@@ -34,15 +40,17 @@ oddEvenMerge n =
     guard $ i + j + k < n
     pure (i + j, i + j + k)
 
+{-|
+  Sorting networks that are optimal by size.
+
+  Source from <https://bertdobbelaere.github.io/sorting_networks.html>.
+ -}
 optimal :: MkPairs
 optimal v = lookup v optimalNetworks
 
 {-
-  Source: https://bertdobbelaere.github.io/sorting_networks.html
-
   In the event that there are multiple networks, one with
   minimal size is picked (but this decision is arbitrary, we will reconsider later).
-
  -}
 optimalNetworks :: [(Int, [] (Int, Int))]
 optimalNetworks =

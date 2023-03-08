@@ -16,8 +16,17 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Mutable as VM
 import Language.Haskell.TH
 
+-- | A monadic partial expression pending inner body.
 type PartQ = Exp -> Q Exp
 
+{- TODO: we should probably have functions for unboxed tuples -}
+
+{- |
+  @gMkSortBy mkPairs n mkP mkE@ generates a function that sorts elements using sorting network.
+
+  @mkP :: [Pat] -> Pat@ and @mkE :: [Exp] -> Exp@ deals with unpacking input value and packing final results
+  respectively. This generalization allows us to deal with lists, tuples, and unboxed-tuples all at once.
+-}
 gMkSortBy :: MkPairs -> Int -> ([Pat] -> Pat) -> ([Exp] -> Exp) -> Q Exp
 gMkSortBy mkPairs n mkP mkE = do
   -- cmp :: a -> a -> Ordering
@@ -67,8 +76,20 @@ gMkSortBy mkPairs n mkP mkE = do
         $(mkBody $ mkE $ VarE <$> ns)
     |]
 
-mkUnsafeSortListBy, mkSortTupBy :: MkPairs -> Int -> ExpQ
+{- |
+  @mkUnsafeSortListBy mkPairs n@ generates an expression of type @(a -> a -> Ordering) -> [a] -> [a]@.
+
+  Note that resulting function is partial and requires input list to contain exactly @n@ elements.
+-}
+mkUnsafeSortListBy :: MkPairs -> Int -> ExpQ
 mkUnsafeSortListBy mkPairs n = gMkSortBy mkPairs n ListP ListE
+
+{- |
+  @mkSortTupBy mkPairs n@ generates an expression of type @(a -> a -> Ordering) -> (a, a, ...) -> (a, a, ...)@.
+
+  Where the input and output tuple @(a, a, ...)@ contains @n@ elements.
+-}
+mkSortTupBy :: MkPairs -> Int -> ExpQ
 mkSortTupBy mkPairs n = gMkSortBy mkPairs n TupP (TupE . fmap Just)
 
 {-
