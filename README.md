@@ -11,14 +11,14 @@ To use this library, `import Data.SortingNetwork` and you will bring two sets of
 
 ```haskell
 -- where X is a number from 2-16
-unsafeSortListXBy :: Ord a => (a -> a -> Ordering) -> [a] -> [a]
+unsafeSortListXBy :: (a -> a -> Ordering) -> [a] -> [a]
 
 -- where X is a number from 2-16
-sortTup2By :: Ord a => (a -> a -> Ordering) -> (a, a) -> (a, a)
-sortTup3By :: Ord a => (a -> a -> Ordering) -> (a, a, a) -> (a, a, a)
-sortTup4By :: Ord a => (a -> a -> Ordering) -> (a, a, a, a) -> (a, a, a, a)
+sortTup2By :: (a -> a -> Ordering) -> (a, a) -> (a, a)
+sortTup3By :: (a -> a -> Ordering) -> (a, a, a) -> (a, a, a)
+sortTup4By :: (a -> a -> Ordering) -> (a, a, a, a) -> (a, a, a, a)
 ...
-sortTup16By :: Ord a => (a -> a -> Ordering) -> (a, a, ..., a) -> (a, a, ..., a)
+sortTup16By :: (a -> a -> Ordering) -> (a, a, ..., a) -> (a, a, ..., a)
 ```
 
 in which `unsafeSortListXBy` are partial functions that only accept list of corresponding length
@@ -31,7 +31,7 @@ A [sorting network](https://en.wikipedia.org/wiki/Sorting_network) can sort fixe
 Observe that the following function sorts a tuple of 3 elements (name shadowing is intentional for demostration):
 
 ```haskell
-sortTup3By :: Ord a => (a -> a -> Ordering) -> (a, a, a) -> (a, a, a)
+sortTup3By :: (a -> a -> Ordering) -> (a, a, a) -> (a, a, a)
 sortTup3By = \cmp (a, b, c) ->
   let sw = \u v f ->
         if cmp u v == GT then f v u else f u v

@@ -13,7 +13,7 @@ import Test.Hspec
 {-
   Routes to a specific partial function given length.
  -}
-sortFnRouter :: Int -> forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a]
+sortFnRouter :: Int -> forall a. (a -> a -> Ordering) -> [a] -> [a]
 sortFnRouter = \case
   2 -> unsafeSortList2By
   3 -> unsafeSortList3By

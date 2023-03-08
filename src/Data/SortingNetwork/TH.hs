@@ -106,7 +106,7 @@ mkUnsafeSortListByFns mkPairs ns =
         defN = mkName $ "unsafeSortList" <> show n <> "By"
     bd <- mkUnsafeSortListBy mkPairs n
     sequence
-      [ sigD defN [t|forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a]|]
+      [ sigD defN [t|forall a. (a -> a -> Ordering) -> [a] -> [a]|]
       , funD defN [clause [] (normalB $ pure bd) []]
       ]
 mkSortTupByFns mkPairs ns =

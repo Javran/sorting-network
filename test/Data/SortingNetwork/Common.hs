@@ -10,7 +10,7 @@ isSorted :: Ord a => [a] -> Bool
 isSorted xs = and (zipWith (<=) xs (tail xs))
 
 mkEndToEndSpec ::
-  (Int -> (forall a. Ord a => (a -> a -> Ordering) -> [a] -> [a])) ->
+  (Int -> (forall a. (a -> a -> Ordering) -> [a] -> [a])) ->
   [Int] ->
   Spec
 mkEndToEndSpec sortFnRouter nRange = forM_ nRange \n ->

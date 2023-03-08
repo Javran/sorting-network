@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           sorting-network
-version:        0.1.0.0
+version:        0.2.1.0
 synopsis:       Sort small lists with sorting network.
 description:    Functions that sort small (2~16 elements) lists or homogenous tuples.
 category:       Sorting
