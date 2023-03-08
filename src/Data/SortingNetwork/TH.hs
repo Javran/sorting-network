@@ -30,6 +30,11 @@ gMkSortBy mkPairs n mkP mkE = do
   let -- let sw = ... in <???>
       step0 :: PartQ
       step0 bd = [|let $(varP swapper) = $(pure swapperVal) in $(pure bd)|]
+
+  pairs <- case mkPairs n of
+    Just ps -> pure ps
+    Nothing -> fail $ "MkPairs returned Nothing on length " <> show n
+
   (mkBody :: PartQ, ns :: [Name]) <- do
     nv <- liftIO $ V.unsafeThaw (V.fromList ns0)
     e <-
@@ -52,7 +57,7 @@ gMkSortBy mkPairs n mkP mkE = do
                   |]
         )
         step0
-        (mkPairs n)
+        pairs
     nvFin <- liftIO $ V.unsafeFreeze nv
     pure (e, V.toList nvFin)
 
